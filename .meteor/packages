@@ -20,5 +20,5 @@ static-html
 accounts-password@1.5.1
 session@1.1.7
 fourseven:scss
-practicalmeteor:mocha
 meteortesting:mocha
+cultofcoders:mocha
