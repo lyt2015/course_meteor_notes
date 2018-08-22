@@ -1,21 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Meteor } from 'meteor/meteor'
+import { withTracker } from 'meteor/react-meteor-data'
 
-const PrivateHeader = props => {
-  const handleLogout = () => {
-    Meteor.logout(err => {
-      if (err) {
-        return console.error('Logout Error:', err)
-      }
-    })
-  }
-
+export const PrivateHeader = props => {
   return (
     <div className="header">
       <div className="header__content">
         <h1 className="header__title">{props.title}</h1>
-        <button className="button button--link-text" onClick={handleLogout}>
+        <button className="button button--link-text" onClick={props.handleLogout}>
           Logout
         </button>
       </div>
@@ -25,6 +18,14 @@ const PrivateHeader = props => {
 
 PrivateHeader.propTypes = {
   title: PropTypes.string.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 }
 
-export default PrivateHeader
+export default withTracker(() => ({
+  handleLogout: () =>
+    Meteor.logout(err => {
+      if (err) {
+        return console.error('Logout Error:', err)
+      }
+    }),
+}))(PrivateHeader)

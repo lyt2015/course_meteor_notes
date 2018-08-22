@@ -16,6 +16,7 @@
     "meteor-node-stubs": "^0.4.1",
     "moment": "^2.22.2",
     "react": "^16.4.2",
+    "react-addons-pure-render-mixin": "^15.6.2",
     "react-dom": "^16.4.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
@@ -31,10 +32,17 @@
     "node": "8.11.3"
   },
   "devDependencies": {
+    "babel-jest": "^23.4.2",
     "chromedriver": "^2.39.0",
+    "enzyme": "^3.4.4",
+    "enzyme-adapter-react-16": "^1.2.0",
     "expect": "^23.5.0",
     "expect.js": "^0.3.1",
+    "jest": "^23.5.0",
+    "jest-meteor-stubs": "^1.5.1",
+    "jest-mock": "^23.2.0",
     "puppeteer": "^1.7.0",
+    "react-addons-test-utils": "^15.6.2",
     "selenium-webdriver": "^3.6.0"
   }
 }
