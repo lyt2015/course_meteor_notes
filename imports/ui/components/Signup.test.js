@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import expect from 'expect'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import jest from 'jest-mock'
 
@@ -14,19 +14,25 @@ if (Meteor.isClient) {
   describe('Signup', function() {
     it('should show error message', function() {
       const error = 'Something went wrong...'
-      const wrapper = shallow(
+      const wrapper = mount(
         <MemoryRouter>
           <Signup onEnter={() => {}} createUser={() => {}} />
         </MemoryRouter>
       )
+      wrapper
         .find(Signup)
-        .dive()
-      wrapper.setState({ error })
+        .instance()
+        .setState({ error })
+      wrapper.update()
       const errorMessage = wrapper.find('p').text()
 
       expect(errorMessage).toBe(error)
 
-      wrapper.setState({ error: '' })
+      wrapper
+        .find(Signup)
+        .instance()
+        .setState({ error: '' })
+      wrapper.update()
       const count = wrapper.find('p').length
 
       expect(count).toBe(0)
@@ -36,25 +42,14 @@ if (Meteor.isClient) {
       const email = 'name@example'
       const password = 'fakePassword'
       const spy = jest.fn()
-      const wrapper = shallow(
+      const wrapper = mount(
         <MemoryRouter>
           <Signup onEnter={() => {}} createUser={spy} />
         </MemoryRouter>
       )
-        .find(Signup)
-        .dive()
-
-      const instance = wrapper.instance()
-      instance.refs = {
-        email: {
-          value: email,
-        },
-        password: {
-          value: password,
-        },
-      }
-      const event = { preventDefault: () => {} }
-      wrapper.find('form').simulate('submit', event)
+      wrapper.find('#email').instance().value = email
+      wrapper.find('#password').instance().value = password
+      wrapper.find('form').simulate('submit', { preventDefault: () => {} })
 
       // method 1
       expect(spy.mock.calls[0][0]).toEqual({ email, password })
@@ -65,57 +60,35 @@ if (Meteor.isClient) {
 
     it('should set error if password is short', function() {
       const spy = jest.fn()
-      const wrapper = shallow(
+      const wrapper = mount(
         <MemoryRouter>
           <Signup onEnter={() => {}} createUser={spy} />
         </MemoryRouter>
       )
-        .find(Signup)
-        .dive()
+      wrapper.find('#email').instance().value = 'test@example'
+      wrapper.find('#password').instance().value = '123                 '
+      wrapper.find('form').simulate('submit', { preventDefault: () => {} })
 
-      const instance = wrapper.instance()
-      instance.refs = {
-        email: {
-          value: 'test@example',
-        },
-        password: {
-          value: '123            ',
-        },
-      }
-      const event = { preventDefault: () => {} }
-      wrapper.find('form').simulate('submit', event)
-
-      expect(wrapper.state('error')).toBeTruthy()
+      expect(wrapper.find(Signup).instance().state.error).toBeTruthy()
     })
 
     it('should set createUser callback errors', function() {
       const reason = 'Jus an error.'
       const spy = jest.fn()
-      const wrapper = shallow(
+      const wrapper = mount(
         <MemoryRouter>
           <Signup onEnter={() => {}} createUser={spy} />
         </MemoryRouter>
       )
-        .find(Signup)
-        .dive()
-
-      const instance = wrapper.instance()
-      instance.refs = {
-        email: {
-          value: 'test@example',
-        },
-        password: {
-          value: '123456789',
-        },
-      }
-      const event = { preventDefault: () => {} }
-      wrapper.find('form').simulate('submit', event)
+      wrapper.find('#email').instance().value = 'test@example'
+      wrapper.find('#password').instance().value = '123456789'
+      wrapper.find('form').simulate('submit', { preventDefault: () => {} })
 
       spy.mock.calls[0][1]({ reason })
-      expect(wrapper.state('error')).toBe(reason)
+      expect(wrapper.find(Signup).instance().state.error).toBe(reason)
 
       spy.mock.calls[0][1]()
-      expect(wrapper.state('error')).toBeFalsy()
+      expect(wrapper.find(Signup).instance().state.error).toBeFalsy()
     })
   })
 }

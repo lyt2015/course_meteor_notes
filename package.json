@@ -2,8 +2,8 @@
   "name": "notes",
   "private": true,
   "scripts": {
-    "start": "meteor run",
-    "test": "meteor test --driver-package=cultofcoders:mocha",
+    "start": "meteor run --port 8080",
+    "test": "meteor test --driver-package=cultofcoders:mocha --port 3000",
     "puppeteer-test": "cross-env TEST_BROWSER_DRIVER=puppeteer meteor test --once --driver-package meteortesting:mocha",
     "puppeteer-test-full": "cross-env TEST_BROWSER_DRIVER=puppeteer meteor test --once --full-app --driver-package meteortesting:mocha",
     "puppeteer-test-watch": "cross-env TEST_WATCH=1 TEST_BROWSER_DRIVER=puppeteer meteor test --full-app --driver-package meteortesting:mocha",

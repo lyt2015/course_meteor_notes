@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import expect from 'expect'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import jest from 'jest-mock'
 
@@ -14,19 +14,26 @@ if (Meteor.isClient) {
   describe('Login', function() {
     it('should show error message', function() {
       const error = 'Something went wrong...'
-      const wrapper = shallow(
+      let wrapper = mount(
         <MemoryRouter>
           <Login onEnter={() => {}} loginWithPassword={() => {}} />
         </MemoryRouter>
       )
+
+      wrapper
         .find(Login)
-        .dive()
-      wrapper.setState({ error })
+        .instance()
+        .setState({ error })
+      wrapper.update()
       const errorMessage = wrapper.find('p').text()
 
       expect(errorMessage).toBe(error)
 
-      wrapper.setState({ error: '' })
+      wrapper
+        .find(Login)
+        .instance()
+        .setState({ error: '' })
+      wrapper.update()
       const count = wrapper.find('p').length
 
       expect(count).toBe(0)
@@ -36,25 +43,14 @@ if (Meteor.isClient) {
       const email = 'name@example'
       const password = 'fakePassword'
       const spy = jest.fn()
-      const wrapper = shallow(
+      const wrapper = mount(
         <MemoryRouter>
           <Login onEnter={() => {}} loginWithPassword={spy} />
         </MemoryRouter>
       )
-        .find(Login)
-        .dive()
-
-      const instance = wrapper.instance()
-      instance.refs = {
-        email: {
-          value: email,
-        },
-        password: {
-          value: password,
-        },
-      }
-      const event = { preventDefault: () => {} }
-      wrapper.find('form').simulate('submit', event)
+      wrapper.find('#email').instance().value = email
+      wrapper.find('#password').instance().value = password
+      const event = wrapper.find('form').simulate('submit', { preventDefault: () => {} })
 
       // method 1
       expect(spy.mock.calls[0][0]).toEqual({ email })
@@ -66,31 +62,20 @@ if (Meteor.isClient) {
 
     it('should set loginWithPassword callback errors', function() {
       const spy = jest.fn()
-      const wrapper = shallow(
+      const wrapper = mount(
         <MemoryRouter>
           <Login onEnter={() => {}} loginWithPassword={spy} />
         </MemoryRouter>
       )
-        .find(Login)
-        .dive()
+      wrapper.find('#email').instance().value = ''
+      wrapper.find('#password').instance().value = ''
 
-      const instance = wrapper.instance()
-      instance.refs = {
-        email: {
-          value: '',
-        },
-        password: {
-          value: '',
-        },
-      }
-
-      const event = { preventDefault: () => {} }
-      wrapper.find('form').simulate('submit', event)
+      wrapper.find('form').simulate('submit', { preventDefault: () => {} })
       spy.mock.calls[0][2]({})
-      expect(wrapper.state('error')).toBeTruthy()
+      expect(wrapper.find(Login).instance().state.error).toBeTruthy()
 
       spy.mock.calls[0][2]()
-      expect(wrapper.state('error')).toBeFalsy()
+      expect(wrapper.find(Login).instance().state.error).toBeFalsy()
     })
   })
 }

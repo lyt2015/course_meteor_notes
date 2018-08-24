@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor'
 import { Tracker } from 'meteor/tracker'
 
 import PrivateHeader from './PrivateHeader'
+import NoteList from './NoteList'
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -32,7 +33,9 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <PrivateHeader title={`Dashboard for ${this.state.address}`} />
-        <div className="page-content">Dashboard page content</div>
+        <div className="page-content">
+          <NoteList />
+        </div>
       </div>
     )
   }
