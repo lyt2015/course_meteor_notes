@@ -28,7 +28,7 @@ const onEnterNotePage = nextProps => {
   if (!Meteor.userId()) {
     history.replace('/')
   } else {
-    Session.set('selectedNoteId', nextProps.match.params.noteId)
+    Session.set('selectedNoteId', nextProps.match.params.id)
   }
 }
 
@@ -59,7 +59,7 @@ export const routes = (
         render={props => <Dashboard {...props} onEnter={onEnterPrivatePage} />}
       />
       <Route
-        path="/dashboard/:noteId"
+        path="/dashboard/:id"
         render={props => <Dashboard {...props} onEnter={onEnterNotePage} />}
       />
       <Route path="*" component={NotFound} />
