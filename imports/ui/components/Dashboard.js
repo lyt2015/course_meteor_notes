@@ -12,7 +12,7 @@ export default class Dashboard extends React.Component {
       address: '',
     }
 
-    this.props.onEnter()
+    this.props.onEnter(props)
   }
 
   componentDidMount() {

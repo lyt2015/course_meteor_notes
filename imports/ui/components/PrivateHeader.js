@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
 
+// TODO: Logout out sometimes stuck on dashboard
+
 export const PrivateHeader = props => {
   return (
     <div className="header">

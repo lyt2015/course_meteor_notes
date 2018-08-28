@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
+import { Session } from 'meteor/session'
 
 import { Notes } from '../../api/notes'
 import NoteListHeader from './NoteListHeader'
@@ -27,9 +28,15 @@ NoteList.propTypes = {
 }
 
 export default withTracker(() => {
+  const selectedNoteId = Session.get('selectedNoteId')
   Meteor.subscribe('notes')
 
   return {
-    notes: Notes.find().fetch(),
+    notes: Notes.find()
+      .fetch()
+      .map(note => {
+        note.selected = note._id === selectedNoteId
+        return note
+      }),
   }
 })(NoteList)
