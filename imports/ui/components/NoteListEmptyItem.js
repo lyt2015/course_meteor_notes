@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NoteListEmptyItem = props => {
+const NoteListEmptyItem = () => {
   return (
     <div>
       <h5>You have no notes!</h5>

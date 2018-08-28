@@ -45,6 +45,7 @@ export const routes = (
       <Route path="/" exact render={props => <Login {...props} onEnter={onEnterPublicPage} />} />
       <Route path="/signup" render={props => <Signup {...props} onEnter={onEnterPublicPage} />} />
       <Route path="/dashboard" render={props => <Dashboard {...props} onEnter={onEnterPrivatePage} />} />
+      <Route path="/dashboard/:noteId" render={props => <Dashboard {...props} onEnter={onEnterPrivatePage} />} />
       <Route path="*" component={NotFound} />
     </Switch>
   </Router>
