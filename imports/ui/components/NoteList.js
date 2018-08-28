@@ -6,6 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data'
 import { Notes } from '../../api/notes'
 import NoteListHeader from './NoteListHeader'
 import NoteListItem from './NoteListItem'
+import NoteListEmptyItem from './NoteListEmptyItem'
 
 export const NoteList = props => {
   const renderListItems = notes => {
@@ -15,7 +16,7 @@ export const NoteList = props => {
   return (
     <div>
       <NoteListHeader />
-      {renderListItems(props.notes)}
+      {props.notes.length === 0 ? <NoteListEmptyItem /> : renderListItems(props.notes)}
       NoteList: {props.notes.length}
     </div>
   )

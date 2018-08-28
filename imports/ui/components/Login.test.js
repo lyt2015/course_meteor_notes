@@ -14,7 +14,7 @@ if (Meteor.isClient) {
   describe('Login', function() {
     it('should show error message', function() {
       const error = 'Something went wrong...'
-      let wrapper = mount(
+      const wrapper = mount(
         <MemoryRouter>
           <Login onEnter={() => {}} loginWithPassword={() => {}} />
         </MemoryRouter>
