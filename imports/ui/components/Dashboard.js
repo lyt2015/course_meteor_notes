@@ -1,6 +1,7 @@
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import { Tracker } from 'meteor/tracker'
+import { Session } from 'meteor/session'
 
 import PrivateHeader from './PrivateHeader'
 import NoteList from './NoteList'
@@ -28,12 +29,13 @@ export default class Dashboard extends React.Component {
 
   componentWillUnmount() {
     this.userTracker.stop()
+    Session.set('selectedNoteId', null)
   }
 
   render() {
     return (
       <div>
-        <PrivateHeader title={`Dashboard for ${this.state.address}`} />
+        <PrivateHeader title={`Dashboard for ${this.state.address}`} history={this.props.history} />
         <div className="page-content">
           <NoteList />
           <Editor />

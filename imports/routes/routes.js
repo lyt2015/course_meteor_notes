@@ -11,6 +11,13 @@ import NotFound from '../ui/components/NotFound'
 import Login from '../ui/components/Login'
 
 const history = createHistory()
+const historyListener = (location, action) => {
+  console.group('history.listen')
+  console.log('location:', location)
+  console.log('action:', action)
+  console.groupEnd()
+}
+// history.listen(historyListener)
 
 const onEnterPublicPage = () => {
   if (Meteor.userId()) {
@@ -32,18 +39,20 @@ const onEnterNotePage = nextProps => {
   }
 }
 
-const unauthenticatedPages = ['/', '/signup']
-const authenticatedPages = ['/dashboard']
-
+const publicPages = ['/', '/signup']
+const privatePages = ['/dashboard']
 export const onAuthChange = isAuthenticated => {
   const pathname = history.location.pathname
+  const inPublicPage = publicPages.includes(pathname)
+  const inPrivatePage = privatePages.some(privatePage => {
+    return pathname.startsWith(privatePage)
+  })
 
-  const inUnauthenticatedPage = unauthenticatedPages.includes(pathname)
-  const inAuthenticatedPage = authenticatedPages.includes(pathname)
-  if (isAuthenticated && inUnauthenticatedPage) {
+  if (isAuthenticated && inPublicPage) {
     history.replace('/dashboard')
   }
-  if (!isAuthenticated && inAuthenticatedPage) {
+
+  if (!isAuthenticated && inPrivatePage) {
     history.replace('/')
   }
 }
@@ -62,7 +71,7 @@ export const routes = (
         path="/dashboard/:id"
         render={props => <Dashboard {...props} onEnter={onEnterNotePage} />}
       />
-      <Route path="*" component={NotFound} />
+      <Route path="*" privacy="public" component={NotFound} />
     </Switch>
   </Router>
 )

@@ -23,11 +23,13 @@ PrivateHeader.propTypes = {
   handleLogout: PropTypes.func.isRequired,
 }
 
-export default withTracker(() => ({
+export default withTracker(props => ({
   handleLogout: () =>
     Meteor.logout(err => {
       if (err) {
         return console.error('Logout Error:', err)
       }
+
+      props.history.replace('/')
     }),
 }))(PrivateHeader)
