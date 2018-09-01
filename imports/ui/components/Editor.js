@@ -1,26 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withTracker } from 'meteor/react-meteor-data'
-import { Session } from 'meteor/session'
 import { Meteor } from 'meteor/meteor'
+import { Session } from 'meteor/session'
+import { Tracker } from 'meteor/tracker'
+import { withTracker } from 'meteor/react-meteor-data'
+import createHistory from 'history/createBrowserHistory'
 
 import { Notes } from '../../api/notes'
 
 export class Editor extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: '',
+      body: '',
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.note && this.props.note !== prevProps.note) {
+      this.setState({ title: this.props.note.title, body: this.props.note.body })
+    }
+  }
+
   handleNoteTitleChange(e) {
-    this.props.call('notes.update', this.props.note._id, {
-      title: e.target.value,
-    })
+    const title = e.target.value
+    this.setState({ title })
+    this.props.call('notes.update', this.props.note._id, { title })
   }
 
   handleNoteBodyChange(e) {
-    this.props.call('notes.update', this.props.note._id, {
-      body: e.target.value,
-    })
+    const body = e.target.value
+    this.setState({ body })
+    this.props.call('notes.update', this.props.note._id, { body })
   }
 
   handleRemoveNote() {
     this.props.call('notes.remove', this.props.note._id)
+    Session.set('selectedNoteId', null)
+    this.props.history.push('/dashboard')
   }
 
   render() {
@@ -29,14 +47,14 @@ export class Editor extends React.Component {
         <div>
           <input
             type="text"
-            value={this.props.note.title}
+            value={this.state.title}
             placeholder="Untitled Note"
             onChange={e => this.handleNoteTitleChange(e)}
           />
           <textarea
             cols="30"
             rows="10"
-            value={this.props.note.body}
+            value={this.state.body}
             placeholder="Your note here"
             onChange={e => this.handleNoteBodyChange(e)}
           />
@@ -57,6 +75,7 @@ Editor.propTypes = {
   selectedNoteId: PropTypes.string,
   note: PropTypes.object,
   call: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default withTracker(() => {
@@ -66,5 +85,6 @@ export default withTracker(() => {
     selectedNoteId,
     note: Notes.findOne(selectedNoteId),
     call: Meteor.call,
+    history: createHistory(),
   }
 })(Editor)

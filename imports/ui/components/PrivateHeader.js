@@ -27,7 +27,5 @@ export default withTracker(props => ({
       if (err) {
         return console.error('Logout Error:', err)
       }
-
-      props.history.replace('/')
     }),
 }))(PrivateHeader)
