@@ -3,12 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run --port 8080",
-    "test": "meteor test --driver-package=cultofcoders:mocha --port 3000",
-    "puppeteer-test": "cross-env TEST_BROWSER_DRIVER=puppeteer meteor test --once --driver-package meteortesting:mocha",
-    "puppeteer-test-full": "cross-env TEST_BROWSER_DRIVER=puppeteer meteor test --once --full-app --driver-package meteortesting:mocha",
-    "puppeteer-test-watch": "cross-env TEST_WATCH=1 TEST_BROWSER_DRIVER=puppeteer meteor test --full-app --driver-package meteortesting:mocha",
-    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-    "visualize": "meteor --production --extra-packages bundle-visualizer"
+    "test": "meteor test --driver-package=cultofcoders:mocha --port 3000"
   },
   "meteor": {
     "mainModule": {
@@ -21,28 +16,20 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.51",
-    "cross-env": "^5.2.0",
-    "meteor-node-stubs": "^0.4.1",
     "moment": "^2.22.2",
     "react": "^16.4.2",
-    "react-addons-pure-render-mixin": "^15.6.2",
     "react-dom": "^16.0.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "simpl-schema": "^1.5.3"
   },
   "devDependencies": {
-    "babel-jest": "^23.4.2",
-    "chromedriver": "^2.39.0",
     "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.2.0",
     "expect": "^23.5.0",
-    "expect.js": "^0.3.1",
     "jest": "^23.5.0",
     "jest-cli": "^20.0.4",
-    "jest-meteor-stubs": "^1.5.1",
     "jest-mock": "^23.2.0",
-    "puppeteer": "^1.7.0",
-    "selenium-webdriver": "^3.6.0"
+    "meteor-node-stubs": "^0.4.1"
   }
 }
