@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { withTracker } from 'meteor/react-meteor-data'
+import { Session } from 'meteor/session'
 import { Accounts } from 'meteor/accounts-base'
 
 export class Signup extends React.Component {
@@ -11,7 +12,7 @@ export class Signup extends React.Component {
       error: '',
     }
 
-    this.props.onEnter()
+    Session.set('currentPagePrivacy', 'public')
   }
 
   handleSubmit(e) {

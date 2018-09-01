@@ -19,34 +19,10 @@ const historyListener = (location, action) => {
 }
 // history.listen(historyListener)
 
-const onEnterPublicPage = () => {
-  if (Meteor.userId()) {
-    history.replace('/dashboard')
-  }
-}
-
-const onEnterPrivatePage = () => {
-  if (!Meteor.userId()) {
-    history.replace('/')
-  }
-}
-
-const onEnterNotePage = nextProps => {
-  if (!Meteor.userId()) {
-    history.replace('/')
-  } else {
-    Session.set('selectedNoteId', nextProps.match.params.id)
-  }
-}
-
-const publicPages = ['/', '/signup']
-const privatePages = ['/dashboard']
-export const onAuthChange = isAuthenticated => {
+export const onAuthAndRouteChange = (isAuthenticated, currentPagePrivacy) => {
   const pathname = history.location.pathname
-  const inPublicPage = publicPages.includes(pathname)
-  const inPrivatePage = privatePages.some(privatePage => {
-    return pathname.startsWith(privatePage)
-  })
+  const inPublicPage = currentPagePrivacy === 'public'
+  const inPrivatePage = currentPagePrivacy === 'private'
 
   if (isAuthenticated && inPublicPage) {
     history.replace('/dashboard')
@@ -60,17 +36,10 @@ export const onAuthChange = isAuthenticated => {
 export const routes = (
   <Router history={history}>
     <Switch>
-      <Route path="/" exact render={props => <Login {...props} onEnter={onEnterPublicPage} />} />
-      <Route path="/signup" render={props => <Signup {...props} onEnter={onEnterPublicPage} />} />
-      <Route
-        path="/dashboard"
-        exact
-        render={props => <Dashboard {...props} onEnter={onEnterPrivatePage} />}
-      />
-      <Route
-        path="/dashboard/:id"
-        render={props => <Dashboard {...props} onEnter={onEnterNotePage} />}
-      />
+      <Route path="/" exact render={props => <Login {...props} />} />
+      <Route path="/signup" render={props => <Signup {...props} />} />
+      <Route path="/dashboard" exact render={props => <Dashboard {...props} />} />
+      <Route path="/dashboard/:id" render={props => <Dashboard {...props} />} />
       <Route path="*" privacy="public" component={NotFound} />
     </Switch>
   </Router>

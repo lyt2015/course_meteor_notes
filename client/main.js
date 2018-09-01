@@ -5,13 +5,14 @@ import ReactDOM from 'react-dom'
 import createHistory from 'history/createBrowserHistory'
 
 import '../imports/startup/simple-schema-configuration'
-import { routes, onAuthChange } from '../imports/routes/routes'
+import { routes, onAuthAndRouteChange } from '../imports/routes/routes'
 
 const history = createHistory()
 
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId()
-  onAuthChange(isAuthenticated)
+  const currentPagePrivacy = Session.get('currentPagePrivacy')
+  onAuthAndRouteChange(isAuthenticated, currentPagePrivacy)
 })
 
 Tracker.autorun(() => {

@@ -14,10 +14,14 @@ export default class Dashboard extends React.Component {
       address: '',
     }
 
-    this.props.onEnter(props)
+    Session.set('currentPagePrivacy', 'private')
   }
 
   componentDidMount() {
+    if (this.props.match.params.id && typeof this.props.match.params.id === 'string') {
+      Session.set('selectedNoteId', this.props.match.params.id)
+    }
+
     this.userTracker = Tracker.autorun(() => {
       const user = Meteor.user()
       if (user) {
