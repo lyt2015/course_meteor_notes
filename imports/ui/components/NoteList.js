@@ -32,7 +32,7 @@ export default withTracker(() => {
   Meteor.subscribe('notes')
 
   return {
-    notes: Notes.find()
+    notes: Notes.find({}, { sort: { updatedAt: -1 } })
       .fetch()
       .map(note => {
         note.selected = note._id === selectedNoteId
