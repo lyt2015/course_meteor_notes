@@ -37,8 +37,8 @@ export class Editor extends React.Component {
 
   handleRemoveNote() {
     this.props.call('notes.remove', this.props.note._id)
-    Session.set('selectedNoteId', null)
     this.props.history.push('/dashboard')
+    Session.set('selectedNoteId', null)
   }
 
   render() {
@@ -74,8 +74,8 @@ export class Editor extends React.Component {
 Editor.propTypes = {
   selectedNoteId: PropTypes.string,
   note: PropTypes.object,
-  call: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  call: PropTypes.func.isRequired,
 }
 
 export default withTracker(() => {
@@ -84,7 +84,7 @@ export default withTracker(() => {
   return {
     selectedNoteId,
     note: Notes.findOne(selectedNoteId),
-    call: Meteor.call,
     history: createHistory(),
+    call: Meteor.call,
   }
 })(Editor)
