@@ -23,6 +23,6 @@ Tracker.autorun(() => {
 })
 
 Meteor.startup(() => {
-  Session.set('selectedNoteId', undefined)
+  Session.set('selectedNoteId', null)
   ReactDOM.render(routes, document.getElementById('app'))
 })

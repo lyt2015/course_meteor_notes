@@ -27,8 +27,6 @@
     "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.2.0",
     "expect": "^23.5.0",
-    "jest": "^23.5.0",
-    "jest-cli": "^20.0.4",
     "jest-mock": "^23.2.0",
     "meteor-node-stubs": "^0.4.1"
   }
