@@ -4,6 +4,9 @@ $lighter-grey: #f9f9f9;
 $primary-color: #397ab1;
 $dark-grey: #777;
 
+// Responsive Web Design
+$mobile-width: 40rem;
+
 // Body
 $body-background-color: #fafafa;
 $body-default-color: #333;
@@ -48,3 +51,4 @@ $item-border-width: 4px;
 $page-content-sidebar-width: 30rem;
 $page-content-main-width: calc(#{$site-max-width} - #{$page-content-sidebar-width});
 $page-content-height: calc(100vh - #{$header-height});
+
