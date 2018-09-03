@@ -18,3 +18,13 @@
   margin: 0;
   padding: 0;
 }
+
+.header__nav-toggle {
+  cursor: pointer;
+  height: 2rem;
+  width: 2rem;
+
+  @include desktop {
+    display: none;
+  }
+}

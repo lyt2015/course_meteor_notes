@@ -59,7 +59,9 @@ export class Editor extends React.Component {
             onChange={e => this.handleNoteBodyChange(e)}
           />
           <div>
-            <button className="button button--secondary" onClick={() => this.handleRemoveNote()}>Delete Note</button>
+            <button className="button button--secondary" onClick={() => this.handleRemoveNote()}>
+              Delete Note
+            </button>
           </div>
         </div>
       )

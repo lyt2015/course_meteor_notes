@@ -39,7 +39,7 @@ export default class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <PrivateHeader title={`Dashboard for ${this.state.address}`} history={this.props.history} />
+        <PrivateHeader title={`Notes for ${this.state.address}`} history={this.props.history} />
         <div className="page-content">
           <div className="page-content__sidebar">
             <NoteList />
