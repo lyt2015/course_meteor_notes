@@ -5,15 +5,17 @@ import { Session } from 'meteor/session'
 import { withTracker } from 'meteor/react-meteor-data'
 
 export const NoteListItem = props => {
+  const selectedItemClass = props.note.selected ? 'item item--selected' : 'item'
+
   return (
     <div
+      className={selectedItemClass}
       onClick={() => {
         props.Session.set('selectedNoteId', props.note._id)
       }}
     >
-      <h5>{props.note.title || 'Untitled Note'}</h5>
-      {props.note.selected ? 'selected' : undefined}
-      <p>{moment(props.note.updatedAt).format('M/DD/YY')}</p>
+      <h5 className="item__title">{props.note.title || 'Untitled Note'}</h5>
+      <p className="item__subtitle">{moment(props.note.updatedAt).format('M/DD/YY')}</p>
     </div>
   )
 }
