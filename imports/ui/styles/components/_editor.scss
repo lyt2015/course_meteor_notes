@@ -1,5 +1,33 @@
 .editor {
   background-color: white;
   border: 1px solid $light-grey;
+  display: flex;
+  flex-direction: column;
+  padding: $large-size;
   width: 100%;
+}
+
+.editor__title {
+  border: none;
+  border-bottom: 2px solid $light-grey;
+  font-size: $large-font-size;
+  margin-bottom: $large-size;
+  outline: none;
+  padding: $input-spacing;
+  text-align: center;
+}
+
+.editor__body {
+  flex-grow: 1;
+  font-weight: 300;
+  margin-bottom: $large-size;
+  outline: none;
+  padding: $input-spacing;
+  resize: none;
+}
+
+.editor__message {
+  text-align: center;
+  margin: $large-size * 2;
+  font-style: italic;
 }

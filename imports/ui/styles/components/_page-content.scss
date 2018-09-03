@@ -3,11 +3,12 @@
   height: $page-content-height;
   margin: 0 auto;
   max-width: $site-max-width;
-  padding: $small-size;
+  padding: $large-size $small-size;
 }
 
 .page-content__sidebar {
   display: flex;
+  padding-right: $large-size;
   width: $page-content-sidebar-width;
 }
 
