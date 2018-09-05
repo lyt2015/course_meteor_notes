@@ -14,6 +14,7 @@ export class Editor extends React.Component {
     this.state = {
       title: '',
       body: '',
+      needsConfirmation: true,
     }
   }
 
@@ -36,9 +37,18 @@ export class Editor extends React.Component {
   }
 
   handleRemoveNote() {
-    this.props.call('notes.remove', this.props.note._id)
-    this.props.history.push('/dashboard')
-    Session.set('selectedNoteId', null)
+    if (
+      !this.state.needsConfirmation ||
+      window.confirm('Do you really want to delete this note?')
+    ) {
+      this.props.call('notes.remove', this.props.note._id)
+      this.props.history.push('/dashboard')
+      Session.set('selectedNoteId', null)
+    }
+  }
+
+  handleAskConfirmation = e => {
+    this.setState({ needsConfirmation: e.target.checked })
   }
 
   render() {
@@ -58,10 +68,20 @@ export class Editor extends React.Component {
             placeholder="Your note here"
             onChange={e => this.handleNoteBodyChange(e)}
           />
-          <div>
+          <div className="editor__operations">
             <button className="button button--secondary" onClick={() => this.handleRemoveNote()}>
               Delete Note
             </button>
+            <label className="checkbox__label">
+              <input
+                className="checkbox__box"
+                type="checkbox"
+                name="confirmation"
+                checked={this.state.needsConfirmation}
+                onChange={this.handleAskConfirmation}
+              />
+              Ask me before delete a note.
+            </label>
           </div>
         </div>
       )

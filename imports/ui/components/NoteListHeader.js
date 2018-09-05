@@ -17,11 +17,21 @@ export const NoteListHeader = props => {
     })
   }
 
+  const handleFilterChange = e => {
+    props.Session.set('filter', e.target.value)
+  }
+
   return (
     <div className="item-list__header">
       <button className="button" onClick={handleCreateNote}>
         Create Note
       </button>
+      <input
+        className="filter"
+        type="text"
+        placeholder="Find Your Notes"
+        onChange={handleFilterChange}
+      />
     </div>
   )
 }

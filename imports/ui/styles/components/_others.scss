@@ -1,0 +1,12 @@
+.link {
+  margin-top: $small-size;
+}
+
+.filter {
+  border: none;
+  border-bottom: 2px solid $light-grey;
+  font-size: $base-font-size;
+  outline: none;
+  padding: $input-spacing;
+  text-align: center;
+}

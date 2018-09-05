@@ -28,10 +28,11 @@ NoteList.propTypes = {
 
 export default withTracker(() => {
   const selectedNoteId = Session.get('selectedNoteId')
+  const filter = Session.get('filter')
   Meteor.subscribe('notes')
 
   return {
-    notes: Notes.find({}, { sort: { updatedAt: -1 } })
+    notes: Notes.find({ title: { $regex: filter, $options: 'i' } }, { sort: { updatedAt: -1 } })
       .fetch()
       .map(note => {
         note.selected = note._id === selectedNoteId

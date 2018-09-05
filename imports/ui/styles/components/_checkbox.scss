@@ -1,8 +1,15 @@
 .checkbox {
   display: block;
-  margin-bottom: $small-size;
+  margin: $small-size 0;
 }
 
 .checkbox__box {
+  margin-left: $small-size;
   margin-right: $small-size / 2;
+}
+
+.checkbox__label {
+  color: $dark-grey;
+  font-size: $base-font-size;
+  font-weight: bold;
 }
