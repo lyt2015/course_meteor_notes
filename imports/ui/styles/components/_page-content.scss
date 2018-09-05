@@ -17,6 +17,7 @@
   top: $header-height;
   bottom: 0;
   left: -100vw;
+  z-index: 1;
 
   @include desktop {
     padding-right: $large-size;
