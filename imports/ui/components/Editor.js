@@ -68,7 +68,7 @@ export class Editor extends React.Component {
             placeholder="Your note here"
             onChange={e => this.handleNoteBodyChange(e)}
           />
-          <div className="editor__operations">
+          <div className="delete-operations">
             <button className="button button--secondary" onClick={() => this.handleRemoveNote()}>
               Delete Note
             </button>

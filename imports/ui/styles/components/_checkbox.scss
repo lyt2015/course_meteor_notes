@@ -12,4 +12,9 @@
   color: $dark-grey;
   font-size: $base-font-size;
   font-weight: bold;
+  margin: $small-size auto 0 auto;
+
+  @include desktop {
+    margin: 0;
+  }
 }
